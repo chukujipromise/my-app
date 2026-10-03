@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 
 export async function POST(request: Request) {
   try {
@@ -13,6 +13,8 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    const supabase = getSupabase();
 
     // Insert order record into Supabase "orders" table
     const { data, error } = await supabase
@@ -34,11 +36,12 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ success: true, order: data[0] }, { status: 201 });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Supabase Insertion Error:', error);
+    const message = error instanceof Error ? error.message : 'Failed to save order to database';
     return NextResponse.json(
-      { error: error.message || 'Failed to save order to database' },
-      { status: 500 }
+      { error: message },
+      { status: message.startsWith('Supabase is not configured') ? 503 : 500 }
     );
   }
 }
