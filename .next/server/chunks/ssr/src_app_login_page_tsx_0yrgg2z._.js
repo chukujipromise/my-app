@@ -1,0 +1,3 @@
+module.exports=[93482,a=>{"use strict";var b=a.i(87924),c=a.i(10849);a.s(["default",0,function(){async function a(){if(!c.supabase)return void console.error("Authentication is not configured yet.");let{error:a}=await c.supabase.auth.signInWithOAuth({provider:"google",options:{redirectTo:`${window.location.origin}/auth/callback`}});a&&console.error("Error logging in:",a.message)}return(0,b.jsx)("button",{onClick:a,children:"Sign in with Google"})}])}];
+
+//# sourceMappingURL=src_app_login_page_tsx_0yrgg2z._.js.map
